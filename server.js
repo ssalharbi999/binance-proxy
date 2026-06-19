@@ -5,8 +5,7 @@ const fetch = (...args) => import('node-fetch').then(({default: f}) => f(...args
 const app = express();
 app.use(cors());
 
-const BASE = 'https://api.binance.com';
-
+const BASE = 'https://api-gcp.binance.com';
 // جلب بيانات 24h - كل عملة بشكل منفصل
 app.get('/ticker', async (req, res) => {
   try {
