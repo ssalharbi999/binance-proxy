@@ -10,8 +10,10 @@ const BASE = 'https://api.binance.com';
 app.get('/ticker', async (req, res) => {
   try {
     const symbols = req.query.symbols;
-    const r = await fetch(`${BASE}/api/v3/ticker/24hr?symbols=${encodeURIComponent(symbols)}`);
-    const data = await r.json();
+    const url = `${BASE}/api/v3/ticker/24hr?symbols=${encodeURIComponent(symbols)}`;
+    const r = await fetch(url);
+    const text = await r.text();
+    const data = JSON.parse(text);
     res.json(data);
   } catch(e) {
     res.status(500).json({error: e.message});
@@ -21,7 +23,8 @@ app.get('/ticker', async (req, res) => {
 app.get('/klines', async (req, res) => {
   try {
     const {symbol, interval, limit} = req.query;
-    const r = await fetch(`${BASE}/api/v3/klines?symbol=${symbol}&interval=${interval||'1h'}&limit=${limit||30}`);
+    const url = `${BASE}/api/v3/klines?symbol=${symbol}&interval=${interval||'1h'}&limit=${limit||30}`;
+    const r = await fetch(url);
     const data = await r.json();
     res.json(data);
   } catch(e) {
